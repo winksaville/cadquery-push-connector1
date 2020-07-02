@@ -1,26 +1,4 @@
 import cadquery as cq # type: ignore
-from typing import List, Tuple
-
-X = 0
-Y = 1
-Z = 2
-
-def verticesAsList(
-        wp #: cq.Workplane
-) -> List[Tuple[float,float]]:
-    l: List[Tuple[float, float]] = []
-    for i in wp.vertices().vals():
-        l.append((i.X, i.Y))
-    return l
-
-# MUST be a better way to create a cricle
-p = (
-    cq.Workplane("XY")
-    .polygon(100, 1, forConstruction=True)
-)
-# Get the vertices of almost circle and append first vert to close
-circle = verticesAsList(p)
-circle.append((circle[0][X], circle[0][Y]))
 
 lenOd=1
 lenId=1
@@ -40,7 +18,4 @@ r1 = (
     .polyline(outline).close()
 )
 
-thing = r1.sweep(
-    cq.Workplane("YZ")
-    .spline(circle)
-)
+thing = r1.revolve(360, (0, 0, 0), (1, 0, 0))
