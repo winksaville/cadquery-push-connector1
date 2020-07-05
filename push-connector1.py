@@ -20,7 +20,10 @@ p = (
 )
 # Get the vertices of almost circle and append first vert to close
 circle = verticesAsList(p)
-circle.append((circle[0][X], circle[0][Y]))
+#print(f'circle={circle}')
+#circle.append((circle[0][X], circle[0][Y]))
+#print(f'circle={circle}')
+
 
 lenOd=1
 lenId=1
@@ -42,5 +45,8 @@ r1 = (
 
 thing = r1.sweep(
     cq.Workplane("YZ")
-    .spline(circle)
+    .spline(circle).close() #, periodic=True, makeWire=True, forConstruction=True)
 )
+
+thing.val().isValid()
+print(f'thing.val().isValid={thing.val().isValid()}')
